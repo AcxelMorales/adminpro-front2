@@ -1,0 +1,66 @@
+<div class="row animated fadeIn">
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">User</h4>
+        <h6 class="card-subtitle">{{ usuario.nombre }}</h6>
+
+        <form #form="ngForm" (submit)="saveProfile(form.value)" ngNativeValidate class="form p-t-20">
+          <div class="form-group">
+            <label for="name">User Name</label>
+            <div class="input-group">
+              <input 
+                class="form-control" 
+                id="name" 
+                type="text" 
+                placeholder="Username"
+                name="nombre"
+                [ngModel]="usuario.nombre"
+                required>
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <div class="input-group">
+              <input 
+                class="form-control" 
+                id="email" 
+                type="email" 
+                placeholder="Enter email"
+                name="email"
+                [ngModel]="usuario.email"
+                required
+                [disabled]="usuario.google">
+              <div class="input-group-addon"><i class="ti-email"></i></div>
+            </div>
+          </div>
+          <button [disabled]="form.invalid" class="btn btn-success btn-block waves-effect waves-light m-r-10" type="submit">
+            Save
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center">Picture</h4>
+        <h6 class="card-subtitle text-center">{{ usuario.nombre }}</h6>
+        <div class="text-center">
+          <img *ngIf="!imageTemp" [src]="usuario.img | image" width="200" class="mb-3 img-thumbnail rounded">
+          <img *ngIf="imageTemp" [src]="imageTemp" width="200" class="mb-3 img-thumbnail rounded">
+        </div>
+        <input 
+          type="file"
+          (change)="imageSelect($event.target.files[0])">
+        <button [disabled]="!uploadFile" (click)="changeImage()" class="btn btn-success btn-block waves-effect waves-light m-r-10 mt-3" type="button">
+          Update photo
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

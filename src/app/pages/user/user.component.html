@@ -1,0 +1,80 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search user" 
+          #txtSearch
+          (keyup)="search(txtSearch.value)">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-sm-12">
+    <div class="alert alert-warning text-center">
+      <strong>Loading</strong>
+      <br>
+      <i class="fa fa-refresh fa-spin fa-5x my-3"></i>
+      <br>
+      <span>I wait a moment please.</span>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Registered users (<small>{{ total }}</small>) </h3>
+        <hr>
+        <div class="table-responsive">
+          <table class="table color-bordered-table primary-bordered-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>E-mail</th>
+                <th>First Name</th>
+                <th>Role</th>
+                <th>Auth</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of usuarios">
+                <td style="width: 70px">
+                  <img (click)="modal(u._id)" [src]="u.img | image" alt="img" class="pointer img-thumbnail" width="50">
+                </td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.nombre }}</td>
+                <td>
+                  <select [(ngModel)]="u.role" name="role" class="form-control">
+                    <option value="ADMIN_ROLE">ADMIN_ROLE</option>
+                    <option value="USER_ROLE">USER_ROLE</option> 
+                  </select>
+                </td>
+                <td>
+                  <span *ngIf="u.google" class="badge badge-info">Google</span>
+                  <span *ngIf="!u.google" class="badge badge-success">Normal</span>
+                </td>
+                <td>
+                  <button (click)="save(u)" class="btn btn-primary mr-3">Save</button>
+                  <button (click)="delete(u)" class="btn btn-danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="pagination(-5)" class="btn btn-secondary mr-3">
+            Previous
+          </button>
+          <button (click)="pagination(5)" class="btn btn-secondary">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
